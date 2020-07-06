@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Some components</title>
+        <link rel="stylesheet" href="components.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <!-- Fillable bubble -->
+        <div id="circleToFill">
+            <!-- <p class="circleText">x%</p> -->
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        let startTime = null;
+        let counting = true;
+        const runningTime = 5000;
+        const circle = document.getElementById("circleToFill");
+        function draw(timestamp) {
+            if (counting){
+                if (!startTime) {
+                    startTime = timestamp;
+                }
+                currentTime = timestamp - startTime;
+                // Okay, time to update the circle...
+                if (currentTime >= runningTime){
+                    counting = false;
+                } else {
+                    let pct = (currentTime / runningTime) * 100;
+                    // Update the style of the circle
+                    circle.style.background = "linear-gradient(0deg, #000 " + pct + "%, #fff " + pct + "%";
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+        circle.onclick = function(e){
+            // Well, circle has been clicked! 
+            // Ensure that counting has been set to false
+            counting = false;
+            // Then, set startTime to null
+            startTime = null;
+            // Then, start counting
+            counting = true;
+        }
+        draw();
+    </script>
+</html>
